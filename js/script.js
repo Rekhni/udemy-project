@@ -11,5 +11,10 @@ const personalMovieDB = {
     privat: false
 }
 
+const lastWatchedMovie = prompt('Один из последних просмотренных фильмов?', ''),
+      ratingOfMovie = prompt('На сколько оцените его?', '')
 
+personalMovieDB.movies[lastWatchedMovie] = ratingOfMovie;
+
+console.log(personalMovieDB);
 
