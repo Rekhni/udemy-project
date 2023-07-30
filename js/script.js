@@ -19,6 +19,7 @@ for (let i=0; i<2; i++) {
     if (lastWatchedMovie != null && ratingOfMovie != null && lastWatchedMovie != '' 
     && ratingOfMovie != '' && lastWatchedMovie.length < 50 && ratingOfMovie.length < 50) {
         personalMovieDB.movies[lastWatchedMovie] = ratingOfMovie;
+        console.log('done');
     } else {
         console.log('error');
         i--;
