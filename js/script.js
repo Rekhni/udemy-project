@@ -1,101 +1,60 @@
-let numberOfFilms;
+// Место для первой задачи
+function getTimeFromMinutes(time) {
+    let hour = time/60;
+    let remain = hour - Math.floor(hour);
+    remain = Math.round(remain * 60);
+    hour = Math.floor(hour);
 
-function start() {
-  numberOfFilms = prompt("Сколько фильмов вы уже посмотрели", "");
-
-  while (numberOfFilms == "" || numberOfFilms == null || isNaN(numberOfFilms)) {
-    numberOfFilms = prompt("Сколько фильмов вы уже посмотрели", "");
-  }
+    if (typeof(time) !== 'number' || hour < 0 || !Number.isInteger(time)) {
+      return 'Ошибка, проверьте данные';
+    } else if (hour == 1) {
+      return `Это ${hour} час и ${remain} минут`;
+    }  else if (hour == 2 || hour == 3 || hour == 4) {
+      return `Это ${hour} часа и ${remain} минут`;
+    } else {
+      return `Это ${hour} часов и ${remain} минут`;
+    }
 }
 
-start();
+console.log(getTimeFromMinutes(51)); 
 
-const personalMovieDB = {
-  count: +numberOfFilms,
-  movies: {},
-  actors: {},
-  genres: [],
-  privat: false,
-};
+// Место для второй задачи
+function findMaxNumber(...args) {
+  if (4 > args.length) {
+    return 0;
+  }
 
-function rememberMyFilms() {
-  for (let i = 0; i < 2; i++) {
-    const lastWatchedMovie = prompt(
-        "Один из последних просмотренных фильмов?",
-        ""
-      ),
-      ratingOfMovie = prompt("На сколько оцените его?", "");
-
-    if (
-      lastWatchedMovie != null &&
-      ratingOfMovie != null &&
-      lastWatchedMovie != "" &&
-      ratingOfMovie != "" &&
-      lastWatchedMovie.length < 50 &&
-      ratingOfMovie.length < 50
-    ) {
-      personalMovieDB.movies[lastWatchedMovie] = ratingOfMovie;
-      console.log("done");
-    } else {
-      console.log("error");
-      i--;
+  for (const arg of args) {
+    if (isNaN(arg) || typeof arg === 'string') {
+      return 0;
     }
   }
+
+  return Math.max(...args);
 }
 
-rememberMyFilms();
+console.log(findMaxNumber(1, '0.5', 3, 4)); 
 
-function detectPersonalLevel() {
-  if (personalMovieDB.count < 10) {
-    console.log("Просмотрено довольно мало фильмов");
-  } else if (10 <= personalMovieDB.count && personalMovieDB.count <= 30) {
-    console.log("Вы классический зритель");
-  } else if (personalMovieDB.count > 30) {
-    console.log("Вы киноман");
+
+function fib(num) {
+  let arr = [0, 1];
+  let prev = 0;
+  let current = 1;
+  if (num == 0) return 0;
+  if (num == 1) return 1;
+  if (!Number.isInteger(num) || typeof(num) !=='number') {
+      return '';
   } else {
-    console.log("Произошла ошибка");
+      for (let i=2; i<num; i++) {
+          const next = prev + current;
+          arr.push(next);
+          prev = current;
+          current = next; 
+          
+      }
   }
+  
+  return arr.join(' ');
 }
 
-detectPersonalLevel();
-
-function writeYourGenres() {
-  for (let i = 1; i < 4; i++) {
-    let userGenre = prompt(`Ваш любимый жанр под номером ${i}`);
-    personalMovieDB.genres.push(userGenre);
-  }
-}
-
-writeYourGenres();
-
-function showMyDB(hidden) {
-  if (!hidden) {
-    console.log(personalMovieDB);
-  }
-}
-
-showMyDB(personalMovieDB.privat);
-
-function calculateVolumeAndArea(num) {
-  const volume = Math.pow(num, 3);
-  const area = 6 * Math.pow(num, 2);
-  if (isNaN(num) || num < 0) {
-    return "При вычислении произошла ошибка";
-  } else {
-    return `Объем куба: ${volume}, площадь всей поверхности: ${area}`;
-  }
-}
-
-console.log(calculateVolumeAndArea(-5));
-
-function getCoupeNumber(coupe) {
-  if (coupe == 0 || coupe >= 36) {
-    return "Таких мест в вагоне не существует";
-  } else if (coupe === parseFloat(coupe)) {
-    return 'Ошибка. Проверьте правильность введенного номера места';
-  } else {
-    return Math.ceil(coupe / 4);
-  }
-}
-
-console.log(getCoupeNumber(3.33));
+console.log(fib(7));
