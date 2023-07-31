@@ -1,60 +1,69 @@
-// Место для первой задачи
-function getTimeFromMinutes(time) {
-    let hour = time/60;
-    let remain = hour - Math.floor(hour);
-    remain = Math.round(remain * 60);
-    hour = Math.floor(hour);
+let numberOfFilms;
 
-    if (typeof(time) !== 'number' || hour < 0 || !Number.isInteger(time)) {
-      return 'Ошибка, проверьте данные';
-    } else if (hour == 1) {
-      return `Это ${hour} час и ${remain} минут`;
-    }  else if (hour == 2 || hour == 3 || hour == 4) {
-      return `Это ${hour} часа и ${remain} минут`;
-    } else {
-      return `Это ${hour} часов и ${remain} минут`;
-    }
+function start() {
+  numberOfFilms = prompt('Сколько фильмов вы уже посмотрели', '').trim();
+
+  while (numberOfFilms == '' || numberOfFilms == null || isNaN(numberOfFilms)) {
+      numberOfFilms = prompt('Сколько фильмов вы уже посмотрели', '').trim();
+  }
 }
 
-console.log(getTimeFromMinutes(51)); 
+start();
 
-// Место для второй задачи
-function findMaxNumber(...args) {
-  if (4 > args.length) {
-    return 0;
-  }
 
-  for (const arg of args) {
-    if (isNaN(arg) || typeof arg === 'string') {
-      return 0;
-    }
-  }
-
-  return Math.max(...args);
+const personalMovieDB = {
+  count: +numberOfFilms,
+  movies: {},
+  actors: {},
+  genres: [],
+  privat: false
 }
 
-console.log(findMaxNumber(1, '0.5', 3, 4)); 
+function rememberMyFilms() {
+  for (let i=0; i<2; i++) {
+      const lastWatchedMovie = prompt('Один из последних просмотренных фильмов?', '').trim(),
+             ratingOfMovie = prompt('На сколько оцените его?', '').trim();
 
-
-function fib(num) {
-  let arr = [0, 1];
-  let prev = 0;
-  let current = 1;
-  if (num == 0) return 0;
-  if (num == 1) return 1;
-  if (!Number.isInteger(num) || typeof(num) !=='number') {
-      return '';
-  } else {
-      for (let i=2; i<num; i++) {
-          const next = prev + current;
-          arr.push(next);
-          prev = current;
-          current = next; 
-          
+      if (lastWatchedMovie != null && ratingOfMovie != null && lastWatchedMovie != '' 
+      && ratingOfMovie != '' && lastWatchedMovie.length < 50 && ratingOfMovie.length < 50) {
+          personalMovieDB.movies[lastWatchedMovie] = ratingOfMovie;
+          console.log('done');
+      } else {
+          console.log('error');
+          i--;
       }
   }
-  
-  return arr.join(' ');
 }
 
-console.log(fib(7));
+rememberMyFilms();
+
+function detectPersonalLevel() {
+  if (personalMovieDB.count < 10) {
+      console.log('Просмотрено довольно мало фильмов');
+  } else if (10 <= personalMovieDB.count && personalMovieDB.count <= 30) {
+      console.log('Вы классический зритель');
+  } else if (personalMovieDB.count > 30) {
+      console.log('Вы киноман');
+  } else {
+      console.log('Произошла ошибка');
+  }
+}
+
+detectPersonalLevel();
+
+function writeYourGenres() {
+  for (let i = 1; i < 4; i++) {
+      let userGenre = prompt(`Ваш любимый жанр под номером ${i}`, '').trim();
+      personalMovieDB.genres.push(userGenre);
+  }
+}
+
+writeYourGenres();
+
+function showMyDB(hidden) {
+  if (!hidden) {
+      console.log(personalMovieDB);
+  }
+}
+
+showMyDB(personalMovieDB.privat);
