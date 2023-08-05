@@ -1,156 +1,47 @@
-let numberOfFilms;
+const box = document.getElementById('box'),
+      btns = document.getElementsByTagName('button'),
+      circles = document.getElementsByClassName('circle'),
+      wrapper = document.querySelector('.wrapper'),
+      hearts = wrapper.querySelectorAll('.heart'),
+      oneHeart = wrapper.querySelector('.heart');
 
 
+// box.style.backgroundColor = 'blue';
+// box.style.width = '500px';
 
+box.style.cssText = 'background-color: blue; width: 500px';
 
+btns[1].style.borderRadius = '100%';
 
+// for (let i = 0; i < hearts.length; i++) {
+//     hearts[i].style.backgroundColor = 'blue';
+// }
 
-const personalMovieDB = {
-  count: +numberOfFilms,
-  movies: {},
-  actors: {},
-  genres: [],
-  privat: false,
-  start: function () {
-    personalMovieDB.count = prompt('Сколько фильмов вы уже посмотрели', '').trim();
-  
-    while (personalMovieDB.count == '' || personalMovieDB.count == null || isNaN(personalMovieDB.count)) {
-      personalMovieDB.count = prompt('Сколько фильмов вы уже посмотрели', '').trim();
-    }
-  },
-  rememberMyFilms: function() {
-    for (let i=0; i<2; i++) {
-        const lastWatchedMovie = prompt('Один из последних просмотренных фильмов?', '').trim(),
-               ratingOfMovie = prompt('На сколько оцените его?', '').trim();
-  
-        if (lastWatchedMovie != null && ratingOfMovie != null && lastWatchedMovie != '' 
-        && ratingOfMovie != '' && lastWatchedMovie.length < 50 && ratingOfMovie.length < 50) {
-            personalMovieDB.movies[lastWatchedMovie] = ratingOfMovie;
-            console.log('done');
-        } else {
-            console.log('error');
-            i--;
-        }
-    }
-  },
-  detectPersonalLevel: function() {
-    if (personalMovieDB.count < 10) {
-        console.log('Просмотрено довольно мало фильмов');
-    } else if (10 <= personalMovieDB.count && personalMovieDB.count <= 30) {
-        console.log('Вы классический зритель');
-    } else if (personalMovieDB.count > 30) {
-        console.log('Вы киноман');
-    } else {
-        console.log('Произошла ошибка');
-     }
-  },
+hearts.forEach(item => {
+    item.style.backgroundColor = 'blue';
+});
 
+const div = document.createElement('div');
 
-  showMyDB: function(hidden) {
-    if (!hidden) {
-        console.log(personalMovieDB);
-    }
-  },
+div.classList.add('black');
 
-  toggleVisibleMyDB: function() {
-    if (personalMovieDB.privat) {
-      personalMovieDB.privat = false;
-    } else {
-      personalMovieDB.privat = true;
-    }
-  },
+// wrapper.prepend(div);
+wrapper.append(div);
 
-  writeYourGenres: function() {
-    for (let i = 1; i < 2; i++) {
-        // let userGenre = prompt(`Ваш любимый жанр под номером ${i}`, '').trim();
-        // if (userGenre != null && userGenre != '') {
-        //   personalMovieDB.genres.push(userGenre);
-        //   console.log('done');
-        // } else {
-        //   console.log('error');
-        //   i--;
-        // }        
+// hearts[0].before(div);
+// hearts[0].after(div);
 
-        let userGenres = prompt('Введите ваши любимые жанры через запятую').toLowerCase().trim();
+// circles[0].remove();
 
-        if (userGenres == null && userGenres === '') {
-            console.log('error');
-            i--;
-        } else {
-            personalMovieDB.genres = userGenres.split(', ');
-            personalMovieDB.genres.sort()
-            console.log('done');
-        }   
-    }
-    personalMovieDB.genres.forEach((genre, i) => {
-      console.log(`Любимый жанр №${i + 1} - это ${genre}`);
-    })
-  }
-}
+// wrapper.insertBefore(div, hearts[2]);
 
+// wrapper.removeChild(hearts[1]);
 
-const shoppingMallData = {
-  shops: [
-      {
-          width: 10,
-          length: 5
-      },
-      {
-          width: 15,
-          length: 7
-      },
-      {
-          width: 20,
-          length: 5
-      },
-      {
-          width: 8,
-          length: 10
-      }
-  ],
-  height: 5,
-  moneyPer1m3: 30,
-  budget: 50000
-}
+// hearts[0].replaceWith(circles[0]); 
+// wrapper.replaceChild(circles[0], hearts[0])
 
-function isBudgetEnough(data) {
-  let result = 0;
+div.innerHTML = '<h1>Hello World!</h1>';
 
-  data.shops.forEach((shop) => {
-    result += shop.width * shop.length * data.height;
-  })
+// div.textContent = 'Hello'; 
 
-  if (data.budget - (result * data.moneyPer1m3) >= 0) {
-    console.log('Бюджета достаточно');
-  } else {
-    console.log('Бюджета недостаточно');
-  }
-};
-
-isBudgetEnough(shoppingMallData);
-
-
-const students = ['Peter', 'Andrew', 'Ann', 'Mark', 'Josh', 'Sandra', 'Cris', 'Bernard', 'Takesi', 'Sam'];
-
-function sortStudentsByGroups(arr) {
-    arr.sort();
-    let res = [];
-    for (let i = 0; i < arr.length; i += 3) {
-      let group = arr.slice(i, i + 3);
-      if (group.length == 1 || group.length == 2) {
-        group = `Оставшиеся студенты: ${group.join(', ')}`;
-      }
-      res.push(group);
-    }
-    if (res.length == 3) {
-      const noStud = 'Оставшиеся студенты: -';
-      res.push(noStud);
-    }
-
-
-    return res;
-}
-
-console.log(sortStudentsByGroups(students));
-
-
+div.insertAdjacentHTML("beforebegin", "<h2>Hello</h2>");
