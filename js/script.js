@@ -1,67 +1,140 @@
-// const box = document.getElementById('box'),
-//       btns = document.getElementsByTagName('button'),
-//       circles = document.getElementsByClassName('circle'),
-//       wrapper = document.querySelector('.wrapper'),
-//       hearts = wrapper.querySelectorAll('.heart'),
-//       oneHeart = wrapper.querySelector('.heart');
+// function pow(x, n) {
+//     let result = 1;
+
+//     for (let i = 0; i < n; i++) {
+//         result *= x;
+//     }
+
+//     return result;
+// }
+
+// function pow(x, n) {
+//     if (n === 1) {
+//         return x;
+//     } else {
+//         return x * pow(x, n - 1);
+//     }
+
+// }
+
+// console.log(pow(5, 2));
 
 
-// // box.style.backgroundColor = 'blue';
-// // box.style.width = '500px';
+const students = {
+    js: [{
+        name: 'John',
+        progress: 100
+    }, {
+        name: 'Ivan',
+        progress: 60
+    }],
 
-// box.style.cssText = 'background-color: blue; width: 500px';
+    html: {
+        basic: [{
+            name: 'Peter',
+            progress: 20
+        }, {
+            name: 'Ann',
+            progress: 18
+        }],
 
-// btns[1].style.borderRadius = '100%';
+        pro: [{
+            name: 'Sam',
+            progress: 10
+        }],
 
-// // for (let i = 0; i < hearts.length; i++) {
-// //     hearts[i].style.backgroundColor = 'blue';
-// // }
+        semi: {
+            students: [{
+                name: 'Test',
+                progress: 100
+            }]
+        }
 
-// hearts.forEach(item => {
-//     item.style.backgroundColor = 'blue';
-// });
-
-// const div = document.createElement('div');
-
-// div.classList.add('black');
-
-// // wrapper.prepend(div);
-// wrapper.append(div);
-
-// // hearts[0].before(div);
-// // hearts[0].after(div);
-
-// // circles[0].remove();
-
-// // wrapper.insertBefore(div, hearts[2]);
-
-// // wrapper.removeChild(hearts[1]);
-
-// // hearts[0].replaceWith(circles[0]); 
-// // wrapper.replaceChild(circles[0], hearts[0])
-
-// div.innerHTML = '<h1>Hello World!</h1>';
-
-// // div.textContent = 'Hello'; 
-
-// div.insertAdjacentHTML("beforebegin", "<h2>Hello</h2>");
+    }    
+};
 
 
-// console.log(document.body);
-// console.log(document.documentElement);
-// console.log(document.body.childNodes);
-// console.log(document.body.firstElementChild);
-// console.log(document.body.lastElementChild);
+// function getTotalProgressByLoop(data) {
+//     let total = 0;
+//     let students = 0;
 
-// console.log(document.querySelector('#current').parentNode);
-// console.log(document.querySelector('#current').parentElement.parentElement);
+//     // let jsStudents = Object.values(data.js);
+//     // let htmlBasicStudents = Object.values(data.html.basic);
+//     // let htmlProStudents = Object.values(data.html.pro)
 
-// console.log(document.querySelector('[data-current="3"]').nextElementSibling);
+//     // function eachStudentProgress(data) {
+//     //     data.forEach(item => {
+//     //         total += item.progress;
+//     //         students += 1;
+//     //      })
+//     // }
 
-for (let node of document.body.childNodes) {
-    if (node.nodeName == '#text' || node.nodeName == '#comment') {
-        continue;
+//     // eachStudentProgress(jsStudents);
+//     // eachStudentProgress(htmlBasicStudents);
+//     // eachStudentProgress(htmlProStudents);
+
+//     for (let course of Object.values(data)) {
+//         if (Array.isArray(course)) {
+//             students += course.length;
+
+//             for (let i = 0; i < course.length; i++) {
+//                 total += course[i].progress;
+//             }
+//         } else {
+//             for (let subCourse of Object.values(course)) {
+//                 students += subCourse.length;
+
+//                 for (let i = 0; i < subCourse.length; i++) {
+//                     total += subCourse[i].progress;
+//                 }
+//             }
+//          }
+//     }
+
+
+//     return total / students;
+// }
+
+// console.log(getTotalProgressByLoop(students));
+
+
+function getTotalProgressByRecursion(data) {
+    if (Array.isArray(data)) {
+        let total = 0;
+
+        for (let i = 0; i < data.length; i++) {
+            total += data[i].progress;
+        }
+
+        return [total, data.length];
+    } else {
+        let total = [0, 0];
+
+        for (let subData of Object.values(data)) {
+            const subDataArr = getTotalProgressByRecursion(subData);
+            total[0] += subDataArr[0];
+            total[1] += subDataArr[1];
+        }
+
+        return total;
     }
-
-    console.log(node);
 }
+
+const result = getTotalProgressByRecursion(students);
+
+console.log(result[0]/result[1]);
+
+
+
+function factorial(n) {
+    if (n == 1) {
+        return n;
+    } else {
+        return n * factorial(n - 1);
+    }
+};
+
+console.log(factorial(5));
+
+
+
