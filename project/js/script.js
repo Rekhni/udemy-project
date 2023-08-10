@@ -14,45 +14,101 @@
 
 'use strict';
 
-const movieDB = {
-    movies: [
-        "Логан",
-        "Лига справедливости",
-        "Ла-ла лэнд",
-        "Одержимость",
-        "Скотт Пилигрим против..."
-    ]
-};
+document.addEventListener('DOMContentLoaded', () => {
+
+    const movieDB = {
+        movies: [
+            "Логан",
+            "Лига справедливости",
+            "Ла-ла лэнд",
+            "Одержимость",
+            "Скотт Пилигрим против..."
+        ]
+    };
+    
+    
+    const promoAdv = document.querySelectorAll('.promo__adv img');
+    const promoBg = document.querySelector('.promo__bg');
+    const promoGenre = promoBg.querySelector('.promo__genre');
+    const promoInteractiveList = document.querySelector('.promo__interactive-list');
+    const addForm = document.querySelector('form.add');
+    const movieInput = addForm.querySelector('.adding__input');
+    const checkbox = addForm.querySelector('[type="checkbox"]');
+
+    addForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        let newFilm = movieInput.value;
+        const favorite = checkbox.checked;
 
 
-const promoAdv = document.querySelectorAll('.promo__adv img');
-const promoBg = document.querySelector('.promo__bg');
-const promoGenre = promoBg.querySelector('.promo__genre');
-const promoInteractiveList = document.querySelector('.promo__interactive-list');
-const promoInteractiveItems = promoInteractiveList.querySelectorAll('.promo__interactive-item');
+        if (newFilm) {
+
+            if (newFilm.length > 21) {
+                newFilm =  `${newFilm.substring(0, 22)}...`;
+            }
+
+            if (favorite) {
+                console.log("Добавляем любимый фильм");
+            }
+    
+            movieDB.movies.push(newFilm);
+            sortArr(movieDB.movies);
+            createMovieList(movieDB.movies, promoInteractiveList);
+        }
+
+        event.target.reset();
+
+    });
+
+    const deleteAdv = (arr) => {
+        arr.forEach(item => {
+            item.remove();
+        });
+    };
 
 
-movieDB.movies.sort();
+    
 
-promoInteractiveList.innerHTML = "";
-
-
-movieDB.movies.forEach((movie, i) => {
-    promoInteractiveList.innerHTML += `
-        <li class="promo__interactive-item">${i+1} ${movie}
-            <div class="delete"></div> 
-        </li>
-    `
-})
+    const makeChanges = () => {
+        promoGenre.textContent = 'драма';
+        promoBg.style.backgroundImage = "url('img/bg.jpg')";
+    };
 
 
 
-console.log(promoInteractiveList); 
+    const sortArr = (arr) => {
+        arr.sort();
+    };
 
-promoAdv.forEach(item => {
-    item.remove();
+
+    
+    
+    function createMovieList(films, parent) {
+        parent.innerHTML = "";
+        sortArr(films);
+
+        films.forEach((film, i) => {
+            parent.innerHTML += `
+              <li class="promo__interactive-item">${i+1} ${film}
+                 <div class="delete"></div> 
+              </li>
+             `
+         });
+
+         document.querySelectorAll('.delete').forEach((btn, i) => {
+            btn.addEventListener('click', () => {
+                btn.parentElement.remove();
+                movieDB.movies.splice(i, 1);
+
+                createMovieList(films, parent);
+            });
+         });
+    }
+
+    deleteAdv(promoAdv);
+    makeChanges();
+    createMovieList(movieDB.movies, promoInteractiveList);
+
 });
 
-promoGenre.textContent = 'драма';
-
-promoBg.style.backgroundImage = "url('img/bg.jpg')";

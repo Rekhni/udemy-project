@@ -1,47 +1,38 @@
-const box = document.getElementById('box'),
-      btns = document.getElementsByTagName('button'),
-      circles = document.getElementsByClassName('circle'),
-      wrapper = document.querySelector('.wrapper'),
-      hearts = wrapper.querySelectorAll('.heart'),
-      oneHeart = wrapper.querySelector('.heart');
+function amountOfPages(summary) {
+    let totalDigits = 0;
+    let currentPage = 0;
+    
+    while (totalDigits < summary) {
+        currentPage++;
+        totalDigits += currentPage.toString().length;
+    }
+    
+    return currentPage;
+
+}
+
+console.log(amountOfPages(1095));
 
 
-// box.style.backgroundColor = 'blue';
-// box.style.width = '500px';
+function unique(arr) {
+    return Array.from(new Set(arr));
+}
+  
+  function isPangram(string) {
+      let arr = string.split(' ');
+      
+      for (let i = 0; i < arr.length; i++) {
+          if (unique(arr[i]).length < arr[i].length) {
+              return false;
+          } else {
+              return true;
+          }
+      }
+  }
 
-box.style.cssText = 'background-color: blue; width: 500px';
+// console.log(duplicateCount('abba'));//2 (а и b)
+// console.log(duplicateCount('arca'));//1 (а)
+console.log(isPangram('Adidas'));//1 (и)
 
-btns[1].style.borderRadius = '100%';
 
-// for (let i = 0; i < hearts.length; i++) {
-//     hearts[i].style.backgroundColor = 'blue';
-// }
 
-hearts.forEach(item => {
-    item.style.backgroundColor = 'blue';
-});
-
-const div = document.createElement('div');
-
-div.classList.add('black');
-
-// wrapper.prepend(div);
-wrapper.append(div);
-
-// hearts[0].before(div);
-// hearts[0].after(div);
-
-// circles[0].remove();
-
-// wrapper.insertBefore(div, hearts[2]);
-
-// wrapper.removeChild(hearts[1]);
-
-// hearts[0].replaceWith(circles[0]); 
-// wrapper.replaceChild(circles[0], hearts[0])
-
-div.innerHTML = '<h1>Hello World!</h1>';
-
-// div.textContent = 'Hello'; 
-
-div.insertAdjacentHTML("beforebegin", "<h2>Hello</h2>");
