@@ -1,38 +1,40 @@
-function amountOfPages(summary) {
-    let totalDigits = 0;
-    let currentPage = 0;
-    
-    while (totalDigits < summary) {
-        currentPage++;
-        totalDigits += currentPage.toString().length;
+'use strict';
+
+class Rectangle {
+    constructor(height, width) {
+        this.height = height;
+        this.width = width;
     }
-    
-    return currentPage;
 
+    calcArea() {
+        return this.height * this.width;
+    }
 }
 
-console.log(amountOfPages(1095));
+class ColoredRectangleWithText extends Rectangle {
+    constructor(height, width, text, bgColor) {
+        super(height, width);
+        this.text = text;
+        this.bgColor = bgColor;
+    }
 
-
-function unique(arr) {
-    return Array.from(new Set(arr));
+    showMyProps() {
+        console.log(`Teкст: ${this.text}, цвет: ${this.bgColor}`);
+    }
 }
-  
-  function isPangram(string) {
-      let arr = string.split(' ');
-      
-      for (let i = 0; i < arr.length; i++) {
-          if (unique(arr[i]).length < arr[i].length) {
-              return false;
-          } else {
-              return true;
-          }
-      }
-  }
 
-// console.log(duplicateCount('abba'));//2 (а и b)
-// console.log(duplicateCount('arca'));//1 (а)
-console.log(isPangram('Adidas'));//1 (и)
+const div = new ColoredRectangleWithText(25, 10, 'Reha', 'red');
+
+div.showMyProps();
+console.log(div.calcArea());
+
+// const square = new Rectangle(10, 15);
+// const long = new Rectangle(20, 15);
+
+// console.log(square.calcArea());
+// console.log(long.calcArea());
+
+
 
 
 
